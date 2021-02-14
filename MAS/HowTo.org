@@ -1,0 +1,135 @@
+# -------------------------------------------------------------------------
+#                  Author    : JPD
+#                  Time-stamp: "2021-01-27 09:19:36 jpdur"
+# -------------------------------------------------------------------------
+
+# --------------------------------------------
+# MAS interface to extract Exchange Rates  
+# --------------------------------------------
+
+* Api Description 
+How to extract the FX Rates from the MAS Pages
+https://www.mas.gov.sg/Statistics/APIs/API-Documentation.aspx
+https://eservices.mas.gov.sg/Statistics/msb/ExchangeRates.aspx
+Provides interactive extract + links to different sets of pages
+
+Related APIs
+|----------------------------------------------+-------------------------------------------------------------------------------------------------|
+| Exchange Rates - End of Period, Daily        | https://secure.mas.gov.sg/api/APIDescPage.aspx?resource_id=95932927-c8bc-4e7a-b484-68a66a24edfe |
+| Exchange Rates - End of Period, Yearly       |                                                                                                 |
+| Exchange Rates - End of Period, Monthly      | https://secure.mas.gov.sg/api/APIDescPage.aspx?resource_id=10eafb90-11a2-4fbd-b7a7-ac15a42d60b6 |
+| Exchange Rates - End of Period, Weekly       |                                                                                                 |
+| Exchange Rates - Average for Period, Weekly  |                                                                                                 |
+| Exchange Rates - Average for Period, Yearly  |                                                                                                 |
+| Exchange Rates - Average for Period, Monthly |                                                                                                 |
+|----------------------------------------------+-------------------------------------------------------------------------------------------------|
+resource_id is the key parameter to describe what kind of data is required
+
+			 
+* Explanations - details Fields
+    No	Name	Title	Type	Unit Of Measure	Description
+    1	end_of_day	End of day	Datetime (Day) "YYYY-MM-DD"	 	 
+    2	eur_sgd	Euro	Numeric (General)	S$ Per Unit of Currency	 
+    3	gbp_sgd	Pound Sterling	Numeric (General)	S$ Per Unit of Currency	 
+    4	usd_sgd	US Dollar	Numeric (General)	S$ Per Unit of Currency	 
+    5	aud_sgd	Australian Dollar	Numeric (General)	S$ Per Unit of Currency	 
+    6	cad_sgd	Canadian Dollar	Numeric (General)	S$ Per Unit of Currency	 
+    7	cny_sgd_100	Chinese Renminbi	Numeric (General)	S$ Per 100 Units of Currency	 
+    8	hkd_sgd_100	Hong Kong Dollar	Numeric (General)	S$ Per 100 Units of Currency	 
+    9	inr_sgd_100	Indian Rupee	Numeric (General)	S$ Per 100 Units of Currency	 
+    10	idr_sgd_100	Indonesian Rupiah	Numeric (General)	S$ Per 100 Units of Currency	 
+    11	jpy_sgd_100	Japanese Yen	Numeric (General)	S$ Per 100 Units of Currency	 
+    12	krw_sgd_100	Korean Won	Numeric (General)	S$ Per 100 Units of Currency	 
+    13	myr_sgd_100	Malaysian Ringgit	Numeric (General)	S$ Per 100 Units of Currency	 
+    14	twd_sgd_100	New Taiwan Dollar	Numeric (General)	S$ Per 100 Units of Currency	 
+    15	nzd_sgd	New Zealand Dollar	Numeric (General)	S$ Per Unit of Currency	 
+    16	php_sgd_100	Philippine Peso	Numeric (General)	S$ Per 100 Units of Currency	 
+    17	qar_sgd_100	Qatar Riyal	Numeric (General)	S$ Per 100 Units of Currency	 
+    18	sar_sgd_100	Saudi Arabia Riyal	Numeric (General)	S$ Per 100 Units of Currency	 
+    19	chf_sgd	Swiss Franc	Numeric (General)	S$ Per Unit of Currency	 
+    20	thb_sgd_100	Thai Baht	Numeric (General)	S$ Per 100 Units of Currency	 
+    21	aed_sgd_100	UAE Dirham	Numeric (General)	S$ Per 100 Units of Currency	 
+    22	vnd_sgd_100	Vietnamese Dong	Numeric (General)	S$ Per 100 Units of Currency
+
+    
+* Day Examples 
+** Month End Examples 
+Note End of Period Monthly is handy but does not give the date of the last working day required to get the data into FIS
+Potentially limited due to that characteristics
+Provides the end of month data since 1988 inception of the service
+https://eservices.mas.gov.sg/api/action/datastore/search.json?resource_id=10eafb90-11a2-4fbd-b7a7-ac15a42d60b6
+Example of request for End of Period, Monthly  
+https://eservices.mas.gov.sg/api/action/datastore/search.json?resource_id=10eafb90-11a2-4fbd-b7a7-ac15a42d60b6&limit=10&filters%5Bend_of_month%5D=2015-01,2015-04,2015-07
+
+Json equivalentResults
+{"success":true,"result":{"resource_id":["10eafb90-11a2-4fbd-b7a7-ac15a42d60b6"],"limit":10,"total":"3",
+			  "records":[
+			      {"end_of_month":"2015-01","preliminary":"0","eur_sgd":"1.5300","gbp_sgd":"2.0363","usd_sgd":"1.3512","aud_sgd":"1.0515","cad_sgd":"1.0697","cny_sgd_100":"21.62","hkd_sgd_100":"17.43","inr_sgd_100":"2.1853","idr_sgd_100":"0.010707","jpy_sgd_100":"1.1449","krw_sgd_100":"0.1233","myr_sgd_100":"37.29","twd_sgd_100":"4.2904","nzd_sgd":"0.9837","php_sgd_100":"3.0646","qar_sgd_100":"37.10","sar_sgd_100":"35.96","chf_sgd":"1.4663","thb_sgd_100":"4.1296","aed_sgd_100":"36.79","vnd_sgd_100":"0.006329","timestamp":"1611678938"},
+			      {"end_of_month":"2015-04","preliminary":"0","eur_sgd":"1.4689","gbp_sgd":"2.0401","usd_sgd":"1.3230","aud_sgd":"1.0575","cad_sgd":"1.0997","cny_sgd_100":"21.32","hkd_sgd_100":"17.07","inr_sgd_100":"2.0804","idr_sgd_100":"0.010227","jpy_sgd_100":"1.1120","krw_sgd_100":"0.1235","myr_sgd_100":"37.03","twd_sgd_100":"4.3235","nzd_sgd":"1.0075","php_sgd_100":"2.9677","qar_sgd_100":"36.34","sar_sgd_100":"35.28","chf_sgd":"1.4067","thb_sgd_100":"4.0237","aed_sgd_100":"36.02","vnd_sgd_100":"0.006128","timestamp":"1611678938"},
+			      {"end_of_month":"2015-07","preliminary":"0","eur_sgd":"1.5028","gbp_sgd":"2.1431","usd_sgd":"1.3728","aud_sgd":"1.0032","cad_sgd":"1.0564","cny_sgd_100":"22.11","hkd_sgd_100":"17.71","inr_sgd_100":"2.1448","idr_sgd_100":"0.010179","jpy_sgd_100":"1.1077","krw_sgd_100":"0.1176","myr_sgd_100":"35.96","twd_sgd_100":"4.3477","nzd_sgd":"0.9047","php_sgd_100":"3.0067","qar_sgd_100":"37.70","sar_sgd_100":"36.61","chf_sgd":"1.4202","thb_sgd_100":"3.9078","aed_sgd_100":"37.37","vnd_sgd_100":"0.006293","timestamp":"1611678938"}
+			  ]
+			 }}
+			 
+** Day - Example1 Given Date 
+https://eservices.mas.gov.sg/api/action/datastore/search.json?resource_id=95932927-c8bc-4e7a-b484-68a66a24edfe&limit=10&filters%5Bend_of_day%5D=2021-01-12
+
+Provides the data for Jan 12th 2021
+JSON structure as provided
+
+{"success":true,"result":{"resource_id":["95932927-c8bc-4e7a-b484-68a66a24edfe"],"limit":10,"total":"1","records":[
+{"end_of_day":"2021-01-12","preliminary":"0",
+"eur_sgd":"1.6169",
+"gbp_sgd":"1.7998",
+"usd_sgd":"1.3311",
+"aud_sgd":"1.0247",
+"cad_sgd":"1.0413",
+"cny_sgd_100":"20.57",
+"hkd_sgd_100":"17.17",
+"inr_sgd_100":"1.8131",
+"idr_sgd_100":"0.009390",
+"jpy_sgd_100":"1.2764",
+"krw_sgd_100":"0.1209",
+"myr_sgd_100":"32.78",
+"twd_sgd_100":"4.7521",
+"nzd_sgd":"0.9541",
+"php_sgd_100":"2.7691",
+"qar_sgd_100":"36.56",
+"sar_sgd_100":"35.49",
+"chf_sgd":"1.4932",
+"thb_sgd_100":"4.4111",
+"aed_sgd_100":"36.24",
+"vnd_sgd_100":"0.005771",
+"timestamp":"1611686986"}]}}
+
+The pair to be created for Investran is exactly in the right order i.e
+eur_sgd ==? EUR/SGD Value 1.6169
+
+Spreadsheet example to be created 
+   | Date                | Variant |  Value | Market Entity Type | Market Entity Code |
+   |---------------------+---------+--------+--------------------+--------------------|
+   | 12/01/2021 00:00:00 | Closing | 1.6169 | FX Pair            | EUR/SGD            |
+   | 12/01/2021 00:00:00 | Closing | 1.7998 | FX Pair            | GBP/SGD            |
+   |                     |         |        |                    |                    |
+
+
+
+** Day - Example2 Between 2 Date 
+
+https://eservices.mas.gov.sg/api/action/datastore/search.json?resource_id=95932927-c8bc-4e7a-b484-68a66a24edfe&limit=10&between%5Bend_of_day%5D=2021-01-12,2021-01-15=end_of_day+asc
+
+Provides Data for all dates i.e. 4 between 12/01/2021 and 15/01/2021 (both limits are included)
+
+{"success":true,"result":{"resource_id":["95932927-c8bc-4e7a-b484-68a66a24edfe"],"limit":10,"total":"4","records":[
+              {"end_of_day":"2021-01-12","preliminary":"0","eur_sgd":"1.6169","gbp_sgd":"1.7998","usd_sgd":"1.3311","aud_sgd":"1.0247","cad_sgd":"1.0413","cny_sgd_100":"20.57","hkd_sgd_100":"17.17","inr_sgd_100":"1.8131","idr_sgd_100":"0.009390","jpy_sgd_100":"1.2764","krw_sgd_100":"0.1209","myr_sgd_100":"32.78","twd_sgd_100":"4.7521","nzd_sgd":"0.9541","php_sgd_100":"2.7691","qar_sgd_100":"36.56","sar_sgd_100":"35.49","chf_sgd":"1.4932","thb_sgd_100":"4.4111","aed_sgd_100":"36.24","vnd_sgd_100":"0.005771","timestamp":"1611699944"},
+	      {"end_of_day":"2021-01-13","preliminary":"0","eur_sgd":"1.6163","gbp_sgd":"1.8112","usd_sgd":"1.3232","aud_sgd":"1.0274","cad_sgd":"1.0411","cny_sgd_100":"20.50","hkd_sgd_100":"17.06","inr_sgd_100":"1.8084","idr_sgd_100":"0.009403","jpy_sgd_100":"1.2774","krw_sgd_100":"0.1209","myr_sgd_100":"32.71","twd_sgd_100":"4.7218","nzd_sgd":"0.9564","php_sgd_100":"2.7537","qar_sgd_100":"36.34","sar_sgd_100":"35.27","chf_sgd":"1.4936","thb_sgd_100":"4.4070","aed_sgd_100":"36.02","vnd_sgd_100":"0.005737","timestamp":"1611699944"},
+	      {"end_of_day":"2021-01-14","preliminary":"0","eur_sgd":"1.6119","gbp_sgd":"1.8100","usd_sgd":"1.3272","aud_sgd":"1.0273","cad_sgd":"1.0457","cny_sgd_100":"20.51","hkd_sgd_100":"17.12","inr_sgd_100":"1.8138","idr_sgd_100":"0.009416","jpy_sgd_100":"1.2755","krw_sgd_100":"0.1205","myr_sgd_100":"32.83","twd_sgd_100":"4.7359","nzd_sgd":"0.9541","php_sgd_100":"2.7615","qar_sgd_100":"36.45","sar_sgd_100":"35.39","chf_sgd":"1.4940","thb_sgd_100":"4.4188","aed_sgd_100":"36.13","vnd_sgd_100":"0.005754","timestamp":"1611699944"},
+	      {"end_of_day":"2021-01-15","preliminary":"0","eur_sgd":"1.6104","gbp_sgd":"1.8136","usd_sgd":"1.3257","aud_sgd":"1.0289","cad_sgd":"1.0475","cny_sgd_100":"20.49","hkd_sgd_100":"17.10","inr_sgd_100":"1.8136","idr_sgd_100":"0.009445","jpy_sgd_100":"1.2775","krw_sgd_100":"0.1207","myr_sgd_100":"32.86","twd_sgd_100":"4.7358","nzd_sgd":"0.9543","php_sgd_100":"2.7598","qar_sgd_100":"36.19","sar_sgd_100":"35.34","chf_sgd":"1.4918","thb_sgd_100":"4.4218","aed_sgd_100":"36.09","vnd_sgd_100":"0.005747","timestamp":"1611699944"}
+	      ]}}
+
+* Implementation
+
+https://devblogs.microsoft.com/scripting/playing-with-json-and-powershell/
+
+$request = 'http://musicbrainz.org/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?inc=aliases&fmt=json'
+Invoke-WebRequest $request
+ConvertFrom-Json | Select name, disambiguation, country
