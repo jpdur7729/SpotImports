@@ -3,26 +3,31 @@
 Generic Interface to
 
 1.  Extract FX Rates from
+
     -   a given source
     -   for a different period
     -   for a given list of currencies
     -   generating FXPair or FXRate
     -   using a base currency different from the source default
-2.  Product different types of Format
-    -   FIS
-    -   F2 // JPD legacy format to proces the data
-3.  Action
+
+2.  Produce file for different types of Format
+
+    1.  FIS
+    2.  F2 i.e. *JPD legacy format*
+
+3.  Process the generated files
+
     -   Execute/Upload
     -   Store in log
 
 ## Intermediate Results
 
-An intermediate csv is - optionally - generated to enable some type of
-exports
+An intermediate csv is always generated
 
 ## Final Results
 
-The csv is transformed into an XLSX spreadsheet ready to be processed
+The csv is optionally transformed into an XLSX spreadsheet ready to be
+processed
 
 # Installation
 
@@ -108,7 +113,7 @@ predefined ECB - EUR MAS - SGD is used Base currency is a list of
 currency with 1 or more currencies. That implies that the number of
 records generated will be n\*p where:
 
--   n is the number of currencies extract (cf. List Currencies or the
+-   n is the number of currencies extract (cf. List Currencies or the
     list of currencies fron the Source Setup) d
 -   p is the number of currencies in the BaseCurrency parameter In case
     of using FXRate only 1st value will be used. The currency is assume
@@ -123,7 +128,7 @@ Important in order to be able to automatically indicate a sub set of
 currencies By default the ListCurrencies are defined based on the Source
 ListCurrencies from ECB will always integrate NOK,SEK but not THB or IDR
 ListCurrencies from MAS will include THB,IDR but not … For the default
-from each source cf. the relevant data for the corresponding source
+from each source cf. the relevant data for the corresponding source
 
 ## Output
 
