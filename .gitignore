@@ -1,0 +1,23 @@
+# ------------------------------------------------------------------------------
+#                     Author    : F2 - JPD
+#                     Time-stamp: "2021-02-14 15:46:49 jpdur"
+# ------------------------------------------------------------------------------
+
+# Directories not to be taken as not ready yet
+ECB
+IMF
+Data
+
+# Files which are not be exported
+readme.org
+makefile 
+
+# All data files generated
+*.csv
+*.xlsx
+
+# All Images
+*.png
+
+# All TestFiles
+Test*.*
