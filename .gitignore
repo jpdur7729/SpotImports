@@ -1,14 +1,14 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-14 15:46:49 jpdur"
+#                     Time-stamp: "2021-02-14 16:10:43 jpdur"
 # ------------------------------------------------------------------------------
 
-# Directories not to be taken as not ready yet
+# Directories not to be included as not ready yet
 ECB
 IMF
 Data
 
-# Files which are not be exported
+# Files which are not be exported - used to build readme.md
 readme.org
 makefile 
 

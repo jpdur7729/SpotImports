@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-14 11:37:13 jpdur"
+#                     Time-stamp: "2021-02-15 07:14:44 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -56,6 +56,7 @@ param(
     [Parameter(Mandatory=$false)] [ValidateSet(",",";","|")]         [string] $CSVSep = ",",
     [Parameter(Mandatory=$false)] [ValidateSet("FXPair","FXRate")]   [string] $FISType = "FXPair",
     [Parameter(Mandatory=$false)] [string] $FISVariant = "Closing",
+    [Parameter(Mandatory=$false)] [string] $BaseCurrency,
     [Parameter(Mandatory=$false)] [string] $StartDate,
     [Parameter(Mandatory=$false)] [string] $EndDate
 )
@@ -98,6 +99,13 @@ $SourceModule = "./"+$Source+"/"+$Source+"Lib"
 Import-module -Force -Name ($SourceModule)
 $SourceDef = &($Setup)
 
+# If BaseCurrency has been populated then we keep it
+if ($BaseCurrency.length -eq 0) {
+    $BaseCurrency = $SourceDef.BaseCurrency
+}
+
+$BaseCurrency
+
 # -------------------------------------------------
 # Based on the Format -> Setup script to be called
 # And Ad-hoc module to be loaded
@@ -136,6 +144,19 @@ $OutputCSV  = $FormatDef.Header($FISType,$CSVSep)
 
 Write-Output "List Curr",$ListCurrencies,"End List"
 
+# -----------------------------------------------------------
+# if BaseCurrency required = SourceDef.BaseCurrency 
+# If that is not the case then pivot calculation is required
+# -----------------------------------------------------------
+if ($BaseCurrency -ne $SourceDef.BaseCurrency) {
+    # Extract the exchange value for the $BaseCurrency
+    $BaseFXRates = $StandardData | Where-Object {($_.CCY2 -eq $BaseCurrency)}
+
+    # Debug
+    # "Ad-Hoc $BaseCurrency Exchange Rate"
+    # $BaseFXRates
+} 
+
 # -------------------------------------------------------------------
 # Process the data as required - This is common to all sources 
 # now that the data extract has been performed and data standardized
@@ -149,11 +170,26 @@ $StandardData | ForEach-Object {
     # If ListCurrencies is empty no currency is filtered if not ...
     If ( ($ListCurrencies -eq $null) -or ($ListCurrencies.Contains($_.CCY2)) ) {
 
-	    # Output the line as provided
+	if ($BaseCurrency -eq $SourceDef.BaseCurrency) {
+	    # Output the line as provided - Default 
 	    $OutputCSV  += $FormatDef.Line($FISType,$CSVSep,$_.CCY1,$_.CCY2,$_.Date,$_.Value,$FISVariant)
 	}
-	
+	else {
+	    $RefDate = $_.Date
+	    # Triangulation is required - Select Exchange Rate
+	    $BaseCurrencyRate = ($BaseFXRates | Where-Object {($_.Date -eq $RefDate)}).Value
+
+	    # Output the line. Check that Base Currency has not been added in the list
+	    if ($BaseCurrency -ne $_.CCY2) {
+		$OutputCSV  += $FormatDef.Line($FISType,$CSVSep,$BaseCurrency,$_.CCY2,$_.Date,$_.Value/$BaseCurrencyRate,$FISVariant)
+	    } else {
+		# We create the record $BaseCurrency = CCY1 / $SourceDef.BaseCurrency = CC2
+		$OutputCSV  += $FormatDef.Line($FISType,$CSVSep,$BaseCurrency,$SourceDef.BaseCurrency,$_.Date,1/$BaseCurrencyRate,$FISVariant)
+	    }
+	}
+    }
 }
+
 
 # Generate the CSV file and overwrite the CSV file if it exists
 $OutputCSV | Out-File ./FXrate.csv
