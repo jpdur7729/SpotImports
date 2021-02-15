@@ -108,19 +108,35 @@ indicated then extraction happens only for today.
 
 ## BaseCurrency
 
-By default not populated and the Base currency of the Source as
-predefined ECB - EUR MAS - SGD is used Base currency is a list of
-currency with 1 or more currencies. That implies that the number of
-records generated will be n\*p where:
+Exchange Rates are always presented against a Base Currency. By default
+the Base Currency is the Base Curency of the source.
+
+| Source | Default Base Currency |
+|--------|-----------------------|
+| ECB    | EUR                   |
+| MAS    | SGD                   |
+|        |                       |
+
+But in some cases, it might be required to present the Exchange Rates
+against a different Base Currency from the one provided by the Source An
+example could be:
+
+-   Source = MAS // Base Currency = USD
+
+A triangulation needs to be added in order to transform the SGD/VND
+provided into the required USD/VND In a similar way the SGD/USD provided
+is replaced by the USD/SGD
+
+### Not yet required
+
+BaseCurrency could be extended as a list of BaseCurrency.
+
+No extra gain in accuracy but a higher volume of data to be handled. As
+that implies that the number of records generated will be n\*p where:
 
 -   n is the number of currencies extract (cf. List Currencies or the
-    list of currencies fron the Source Setup) d
--   p is the number of currencies in the BaseCurrency parameter In case
-    of using FXRate only 1st value will be used. The currency is assume
-    to be different from the default currency of the Source and be the
-    pivot currency of the FXRate
-
-That is an extension to be considered
+    list of currencies fron the Source Setup)
+-   p is the number of currencies in the BaseCurrency parameter list.
 
 ## ListCurrencies
 
