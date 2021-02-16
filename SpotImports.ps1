@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-15 07:14:44 jpdur"
+#                     Time-stamp: "2021-02-16 06:36:31 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -49,6 +49,8 @@ param(
     [Parameter(Mandatory=$false)] [string] $Exec_Dir = [System.IO.Path]::GetDirectoryName($myInvocation.MyCommand.Definition),
     # [Parameter(Mandatory=$false)] [string] $ListCurrenciesStr = "GBP,USD,JPY",
     [Parameter(Mandatory=$false)] [string] $ListCurrenciesStr,
+    # [Parameter(Mandatory=$false)] [string] $ListDatesStr = "2021-01-01,2021-02-11,2021-02-12,2021-01-01,2020-13-13",
+    [Parameter(Mandatory=$false)] [string] $ListDatesStr,
     [Parameter(Mandatory=$false)] [ValidateSet('NoAction','F2')]     [string] $Processing = "NoAction",
     [Parameter(Mandatory=$false)] [ValidateSet('FIS','F2')]          [string] $Format = "FIS",
     [Parameter(Mandatory=$false)] [ValidateSet('ECB','MAS')]         [string] $Source = "ECB",
@@ -133,6 +135,12 @@ $FormatDef   = &($FormatSetup)
 # Example xxx EUR GBP 0.8 ==> 1 EUR = 0.8 GBP 
 # ------------------------------------------------------------------------- 
 $StandardData = $SourceDef.ExtractData($StartDateasDate,$EndDateasDate)
+
+# We need know to filter the data based on the list of dates available
+if ($ListDates -ne $null) {
+    "Filtering List of Dates"
+    $StandardData = $StandardData | ? {$_.Date -in  $ListDates.DateasDate}
+}
 
 # # Debug
 # Write-Output "In the main module"

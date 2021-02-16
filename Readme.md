@@ -101,10 +101,24 @@ All Dates are string in the following format yyyy-mm-dd
 | -StartDate | D       | If not populated System Date    |
 | -EndDate   | D       | If not populated StartDate -1   |
 | -ListDate  |         | List of dates all in yyyy-mm-dd |
-|            |         | Not Yet Implemented             |
+|            |         | , `comma` separated             |
+
+### StartDate / EndDate
 
 As a result of the default convention if no StartDate and no EndDate is
-indicated then extraction happens only for today.
+indicated then extraction happens only for Today and the day Before
+
+### ListDates
+
+If ListDates is populated then StartDate and EndDate are **NOT** taken
+into account even if populated.
+
+The Extract phase is done based on:
+
+-   the minimum Date in the list = StartDate
+-   the maximal Date in the list = EndDate
+
+The result of the extraction is then filtered using ListDates
 
 ## BaseCurrency
 
@@ -118,14 +132,15 @@ the Base Currency is the Base Curency of the source.
 |        |                       |
 
 But in some cases, it might be required to present the Exchange Rates
-against a different Base Currency from the one provided by the Source An
-example could be:
+against a different Base Currency from the one provided by the Source
 
--   Source = MAS // Base Currency = USD
+An example could be:
+
+-   Source = MAS // required Base Currency = USD
 
 A triangulation needs to be added in order to transform the SGD/VND
-provided into the required USD/VND In a similar way the SGD/USD provided
-is replaced by the USD/SGD
+provided into the required USD/VND. In a similar way the SGD/USD
+provided is replaced by the USD/SGD
 
 ### Not yet required
 

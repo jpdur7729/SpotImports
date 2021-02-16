@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-14 11:23:55 jpdur"
+#                     Time-stamp: "2021-02-16 06:32:41 jpdur"
 # ------------------------------------------------------------------------------
 
 class Currency {
@@ -226,6 +226,49 @@ if ($ListCurrenciesStr.length -ne 0) {
 
 }
 
+# Class to manipulate ListDates
+class DateStruct {
+    [string]$Date
+    [datetime]$DateasDate
+}
+
+# Manage the list of dates if any has been provided 
+if ($ListDatesStr.length -ne 0) {
+    
+    # Process the List of Dates if it exists
+    $ListDates = @()
+
+    # ------------------------------------------------------------------------------- 
+    # Convert the , separated string into an array
+    # if the date is not a recognized one - error is displayed and the incorrect date
+    # is filtered out automatically... the error message below is displayed
+    # ------------------------------------------------------------------------------- 
+    # Exception calling "ParseExact" with "3" argument(s): "The DateTime represented 
+    # by the string is not supported in calendar System.Globalization.GregorianCalendar."
+    # ------------------------------------------------------------------------------- 
+    $ListDatesStr.Split(",") | ForEach {
+	$ListDates += New-Object DateStruct -Property @{ Date=$_ ; DateasDate = [datetime]::ParseExact($_,"yyyy-MM-dd", $null) }
+    }
+
+    # Filtered out any duplicate dates
+    $ListDates = $ListDates | Sort-Object -Property Date -Unique
+
+    # Modify StartDate and EndDate accordingly
+    if ($ListDates.length -ne 0) {
+	
+	# Extract Max and min 
+	$MinDate = $ListDates | Select-Object -first 1
+	$MaxDate = $ListDates | Select-Object -last 1
+
+	# Adjust accordingly StartDate and EndDate in order to extract the needed data
+	$StartDate = $MinDate.Date ; $StartDateasDate = $MinDate.DateasDate
+	$EndDate   = $MaxDate.Date ; $EndDateasDate   = $MaxDate.DateasDate
+    }
+    else {
+	$ListDates = $null
+    }
+
+}
 
 
 # Debug
