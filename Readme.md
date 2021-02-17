@@ -210,6 +210,18 @@ Option only is accepted is Format = FIS
 This is an option used for FIS only if Closing is not used There is no
 control about the value. Only a default value **Closing** is provided.
 
+## Show
+
+| Values | Default | Comments                                                |
+|--------|---------|---------------------------------------------------------|
+| Show   | D       | Display the contents of the FXRate spreadsheet in Excel |
+| NoShow |         | Does not display anything in Excel.                     |
+
+NoShow option is actually useful if various circumstances such as:
+
+1.  Excel is NOT available
+2.  For testing purposes when many extracts in succession are done
+
 # Date Format
 
 Theoretically precaution has beem taken to convert/handle Date in the

@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-17 07:20:59 jpdur"
+#                     Time-stamp: "2021-02-17 11:53:27 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -20,6 +20,7 @@ param(
     [Parameter(Mandatory=$false)] [ValidateSet('CsvXlsx','CsvOnly')] [string] $Output = "CsvXlsx",
     [Parameter(Mandatory=$false)] [ValidateSet(",",";","|")]         [string] $CSVSep = ",",
     [Parameter(Mandatory=$false)] [ValidateSet("FXPair","FXRate")]   [string] $FISType = "FXPair",
+    [Parameter(Mandatory=$false)] [ValidateSet("Show","NoShow")]     [string] $Show = "Show",
     [Parameter(Mandatory=$false)] [string] $FISVariant = "Closing",
     [Parameter(Mandatory=$false)] [string] $BaseCurrency,
     [Parameter(Mandatory=$false)] [string] $StartDate,

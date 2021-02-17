@@ -1,14 +1,11 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-17 06:52:19 jpdur"
+#                     Time-stamp: "2021-02-17 11:52:33 jpdur"
 # ------------------------------------------------------------------------------
 
 # Convert String Date to Date
 if ($StartDate.length -eq 0) {$StartDateasDate = $null} else { $StartDateasDate = [datetime]::ParseExact($StartDate,"yyyy-MM-dd", $null) }
 if ($EndDate.length -eq 0)   {$EndDateasDate   = $null} else { $EndDateasDate   = [datetime]::ParseExact($EndDate  ,"yyyy-MM-dd", $null) }
-
-# Uniquify the generated file(s)
-$BatchID = (New-GUID).Guid
 
 # ---------------------------------------------------------
 # If no EndDate then EndDate is today 
@@ -21,6 +18,9 @@ if ($EndDateasDate -eq $null) {
 if ($StartDateasDate -eq $null) {
     $StartDateasDate = $EndDateasDate.AddDays(-1)
 }
+
+# Uniquify the generated file(s)
+$BatchID = (New-GUID).Guid
 
 # -------------------------------------------------------------------
 # https://www.sqlshack.com/powershell-split-a-string-into-an-array/
@@ -96,6 +96,41 @@ if ($ListDatesStr.length -ne 0) {
 
 # Debug
 # if ($ListCurrencies -eq $null) {Write-Host "No currency List"}
+
+# Package all the parameters in order to add them to the dashboard
+$ParametersList = [pscustomobject]@{
+    BatchID = $BatchID
+    Link = ""
+# All repackaged parameters in the order of the displayed fields    
+    StartDate = $StartDate
+    EndDate = $EndDate
+    Source = $Source
+    ListCurrencies = $ListCurrenciesStr
+    ListDates = $ListDatesStr
+    Format = $Format
+    BaseCurrency = $BaseCurrency
+    FISType = $FISType
+    FISVariant = $FISVariant
+    Output = $Output
+    CSVSep = $CSVSep
+    Processing = $Processing
+    Show = $Show
+}
+
+# --------------------------------------------------------
+# Add all the Parameters of this run to the Dashboards
+# --------------------------------------------------------
+# Read the list of previous runs
+$data = Import-Excel -Path ("./Dashboard.xlsx") 
+
+# Add the new run at the top of the list 
+$ParametersArray = @()
+$ParametersArray += $ParametersList
+$ParametersArray += $data
+
+# Push all runs to the list
+$ParametersArray | Export-Excel -AutoSize -AutoFilter Dashboard.xlsx -WorksheetName "Dashboard"
+
 
 
 
