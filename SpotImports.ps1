@@ -1,48 +1,11 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-16 06:36:31 jpdur"
+#                     Time-stamp: "2021-02-17 07:20:59 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
-# Detailed presentation in Presentation .org 
+# Detailed explanation in Readme.org 
 # -------------------------------------------------------------------------
-
-# ----------------------------------------------------------------------------------------------------
-# https://powertoe.wordpress.com/2014/04/26/you-know-powershell-is-an-object-oriented-language-right/
-# Object for the poor as it is simply a struct (C Equivalent) with some extra functions added
-# Relies on the default psobject
-# ----------------------------------------------------------------------------------------------------
-
-# https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_advanced_parameters?view=powershell-7.1
-# PowerShell
-
-# Class SoundNames : System.Management.Automation.IValidateSetValuesGenerator {
-#     [String[]] GetValidValues() {
-#         $SoundPaths = '/System/Library/Sounds/',
-#             '/Library/Sounds','~/Library/Sounds'
-#         $SoundNames = ForEach ($SoundPath in $SoundPaths) {
-#             If (Test-Path $SoundPath) {
-#                 (Get-ChildItem $SoundPath).BaseName
-#             }
-#         }
-#         return [String[]] $SoundNames
-#     }
-# }
-
-# The [SoundNames] class is then implemented as a dynamic ValidateSet value as follows:
-# PowerShell
-
-# Param(
-#     [ValidateSet([SoundNames])]
-#     [String]$Sound
-# )
-
-
-
-
-
-
-
 
 # Management of all parameters 
 param(
@@ -63,25 +26,19 @@ param(
     [Parameter(Mandatory=$false)] [string] $EndDate
 )
 
+# Execution is done from the directory of the script ==> relative paths are thus possible
+cd $Exec_Dir
+
+# ----------------------------------------------------------------------
+# Before Starting the process let's check that Dashboard is accessible 
+# Check that there is no open file which will create problems later on 
+# ----------------------------------------------------------------------
+if (&("./CheckDashboard.ps1")){
+    exit
+}
+
 # Import module with some standardized function
 import-module -Force -Name ./SpotImportsLib
-
-# # 1st value of the list is the default value 
-# $ListSources    = "ECB","MAS"
-# $ListOutput     = "CsvXlsx", "CsvOnly"
-# $ListProcessing = "NoAction","F2"
-# $ListCSVSeps    = ",",";","|"
-# $ListOutput     = "CsvXlsx", "CsvOnly"
-# $ListFormat     = "F2", "FIS"
-
-# Method to validate that the received parameters is in a list
-          # [Parameter(Mandatory=$true)]
-          # [ValidateSet('Small','Medium','Large')]
-          # [String]$size
-
-# Convert String Date to Date
-if ($StartDate.length -eq 0) {$StartDateasDate = $null} else { $StartDateasDate = [datetime]::ParseExact($StartDate,"yyyy-MM-dd", $null) }
-if ($EndDate.length -eq 0)   {$EndDateasDate   = $null} else { $EndDateasDate   = [datetime]::ParseExact($EndDate  ,"yyyy-MM-dd", $null) }
 
 # ---------------------------------------------------------------------------------------
 # Check Parameters / for more complex checks that simply ValidateSet
@@ -116,9 +73,6 @@ $BaseCurrency
 # -------------------------------------------------
 $FormatSetup = "./Format/"+$Format+"Setup.ps1"
 $FormatDef   = &($FormatSetup)
-
-# # CHeck that the dashboard is available - if not abort
-# . ./CHeckDashboard.ps1
 
 # Debug Data
 # $SourceDef.BaseCurrency
