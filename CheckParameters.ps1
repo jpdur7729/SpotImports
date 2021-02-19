@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-17 11:52:33 jpdur"
+#                     Time-stamp: "2021-02-19 06:27:07 jpdur"
 # ------------------------------------------------------------------------------
 
 # Convert String Date to Date
@@ -93,6 +93,8 @@ if ($ListDatesStr.length -ne 0) {
 
 }
 
+# Control the show option accordingly 
+$ShowOption = ($Show -eq "Show")
 
 # Debug
 # if ($ListCurrencies -eq $null) {Write-Host "No currency List"}

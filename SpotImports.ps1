@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-17 11:53:27 jpdur"
+#                     Time-stamp: "2021-02-19 07:03:54 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -90,6 +90,7 @@ $FormatDef   = &($FormatSetup)
 # Example xxx EUR GBP 0.8 ==> 1 EUR = 0.8 GBP 
 # ------------------------------------------------------------------------- 
 $StandardData = $SourceDef.ExtractData($StartDateasDate,$EndDateasDate)
+exit
 
 # We need know to filter the data based on the list of dates available
 if ($ListDates -ne $null) {
@@ -166,7 +167,16 @@ if ($Output -ne "CsvOnly") {
     # Delete the destination file and convert the csv into an Excel spreadsheet
     # If any error such as the file does not exist it continues
     rm FXrate.xlsx -Force -ErrorAction Continue
-    Import-Csv -Path .\FXrate.csv -Delimiter $CSVSep | Export-Excel -Show -AutoSize -AutoFilter FXrate.xlsx -WorksheetName "Market data"
+
+    # ---------------------------------------------------------------------------------------
+    # Splatting to be used in order to pass a parameter which is actually a variable
+    # https://stackoverflow.com/questions/58507217/how-to-pass-a-switch-parameter-as-a-variable-via-splatting-in-powershell
+    # Using the : syntax as explained in the link above 
+    # Use for flag Show in the Export-Excel ... Could be used for the WorksheetName too 
+    # ---------------------------------------------------------------------------------------
+
+    # Import-Csv -Path .\FXrate.csv -Delimiter $CSVSep | Export-Excel -Show -AutoSize -AutoFilter FXrate.xlsx -WorksheetName "Market data"
+    Import-Csv -Path .\FXrate.csv -Delimiter $CSVSep | Export-Excel -Show:$ShowOption -AutoSize -AutoFilter FXrate.xlsx -WorksheetName "Market data"
 
     # Copy the generated xlsx file
     cp ./FXrate.xlsx ($Exec_Dir+"/Data/FXrate"+$BatchID+".xlsx")
