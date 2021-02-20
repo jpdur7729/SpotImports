@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-19 06:27:07 jpdur"
+#                     Time-stamp: "2021-02-20 08:10:25 jpdur"
 # ------------------------------------------------------------------------------
 
 # Convert String Date to Date
@@ -122,13 +122,19 @@ $ParametersList = [pscustomobject]@{
 # --------------------------------------------------------
 # Add all the Parameters of this run to the Dashboards
 # --------------------------------------------------------
-# Read the list of previous runs
-$data = Import-Excel -Path ("./Dashboard.xlsx") 
-
 # Add the new run at the top of the list 
 $ParametersArray = @()
 $ParametersArray += $ParametersList
-$ParametersArray += $data
+
+# Only if the Dashboard.xlsx exists and we have read something
+if ((Test-Path -Path ($Exec_Dir+"\Dashboard.xlsx") ) -eq $true) {
+    
+    # Read the list of previous runs
+    $data = Import-Excel -Path ("./Dashboard.xlsx")
+
+    # Have we read something 
+    if ($data.length -ne 0) { $ParametersArray += $data }
+}
 
 # Push all runs to the list
 $ParametersArray | Export-Excel -AutoSize -AutoFilter Dashboard.xlsx -WorksheetName "Dashboard"

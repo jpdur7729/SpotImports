@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-20 06:49:07 jpdur"
+#                     Time-stamp: "2021-02-20 08:35:03 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -64,7 +64,7 @@ if ($BaseCurrency.length -eq 0) {
     $BaseCurrency = $SourceDef.BaseCurrency
 }
 
-$BaseCurrency
+# $BaseCurrency
 
 # -------------------------------------------------
 # Based on the Format -> Setup script to be called
@@ -89,13 +89,13 @@ $FormatDef   = &($FormatSetup)
 # Value: 1 CCY1 = Value CCY2
 # Example xxx EUR GBP 0.8 ==> 1 EUR = 0.8 GBP 
 # ------------------------------------------------------------------------- 
-$StartDateasDate
-$EndDateasDate
 $StandardData = $SourceDef.ExtractData($StartDateasDate,$EndDateasDate)
 
 # Do not Delete !!!! 
 # weird cleanup as in some cases records with empty date appear
 $StandardData = $StandardData | Where-Object {$_.Date -ne $null}
+
+# $StandardData
 
 # We need know to filter the data based on the list of dates available
 if ($ListDates -ne $null) {
@@ -173,7 +173,9 @@ if ($Output -ne "CsvOnly") {
 
     # Delete the destination file and convert the csv into an Excel spreadsheet
     # If any error such as the file does not exist it continues
-    rm FXrate.xlsx -Force -ErrorAction Continue
+    # https://riptutorial.com/powershell/example/20867/erroraction-parameter
+    # No error message if the file does NOT exist // If blocked sorted before 
+    rm FXrate.xlsx -Force -ErrorAction SilentlyContinue
 
     # ---------------------------------------------------------------------------------------
     # Splatting to be used in order to pass a parameter which is actually a variable
