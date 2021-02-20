@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-19 07:25:24 jpdur"
+#                     Time-stamp: "2021-02-20 06:43:03 jpdur"
 # ------------------------------------------------------------------------------
 
 function extractDatainInterval {
@@ -10,7 +10,9 @@ function extractDatainInterval {
     )
 
     $StartDateasDate = [datetime]::ParseExact($StartDate,"yyyy-MM-dd", $null) 
-    $EndDateasDate   = [datetime]::ParseExact($EndDate  ,"yyyy-MM-dd", $null) 
+    $EndDateasDate   = [datetime]::ParseExact($EndDate  ,"yyyy-MM-dd", $null)
+
+    Write-Host "Start Extract Data Interval"
 
     # Extract the .zip files with the history of FX Rates from ECB
     # Force the output to be eurofxref-hist.zip thus overwriting any previous extraction
@@ -22,7 +24,7 @@ function extractDatainInterval {
     # Delete the intermediate file
     # ---------------------------------------------------------------------------------------------
     $extractcmd | Out-File -Encoding ASCII "./goextract.bat"
-    & "./goextract.bat"
+    ./goextract.bat
     rm goextract.bat
     
     # Add the 7Zip command line to extract the csv file
@@ -42,63 +44,89 @@ function extractDatainInterval {
     # | 2021-01-11 | 1.2163 | 126.76 | 1.9558 |
 
     # Step 1 filter for only the dates in the right interval 
-    $ListData = $RawList | ? {$_.Date -ge  $StartDate} | ? {$_Date -le $EndDate}
+    $ListData = $RawList | Where-Object { ($_.Date -ge  $StartDate) -and ($_.Date -le $EndDate) }
 
-    Write-Host $ListData
-    exit
+    # Extract from List of Dates and List of Currencies
+    $AllCurrencies = "USD","JPY" ,"BGN" ,"CZK" ,"DKK" ,"GBP" ,"HUF" ,"PLN" ,"RON" ,"SEK" ,"CHF" ,"ISK" ,"NOK" ,"HRK" ,"RUB" ,"TRY" ,"AUD" ,"BRL" ,"CAD" ,"CNY" ,"HKD" ,"IDR" ,"ILS" ,"INR" ,"KRW" ,"MXN" ,"MYR" ,"NZD" ,"PHP" ,"SGD" ,"THB" ,"ZAR"
 
-    # Key to return the data to caller
-    $request
-    
-}
-
-# ------------------------------------------------
-# Standard Output for the data extracted from ECB 
-# ------------------------------------------------
-function formatRawData {
-    
-    param(
-	[Parameter(Mandatory=$true)] [string]$request
-    )
-    
-    #Extract the data from MAS and process the JSON accordingly 
-    $data = Invoke-WebRequest $request | Select -ExpandProperty Content | ConvertFrom-Json | Select -ExpandProperty result   
-
-    # Create Empty array to store the normalized data
+    # Prepare the standard format of Data
     $StandardData=@()
-    
-    # Processing the data in order to get the standard data type
-    $data.records | ForEach-Object {
-	
-	# Read the date for the record to be processed
-	$FxDateasDate = [datetime]::ParseExact($_.end_of_day,"yyyy-MM-dd", $null)
 
-	# Loop through all the properties of the object
-	$_.PSObject.Properties | ForEach-Object {
-	    # Eliminate the 3 fields we are not interested in
-	    if (($_.Name -ne "timestamp") -and ($_.Name -ne "end_of_day") -and ($_.Name -ne "preliminary")) {
+    # Process the list to get the standard format 
+    $ListData | ForEach-Object {
+	# For each line 
+        $FxDateasDate = [datetime]::ParseExact($_.Date,"yyyy-MM-dd", $null)
 
-		# Extract the key information from Name
-		$CCY = $_.Name.substring(0,3).ToUpper()
-		if ($_.Name.length -ge 8) { $Mult = $_.Name.substring(8) } else { $Mult = 1 }
+	# We extract all the Currencies provided by ECB
+	ForEach ($CCY in $AllCurrencies ) {
+	    
+	    # Create the structure of the object to be added 
+	    $ObjectStructure = @{
+		Date  = $FxDateasDate
+		CCY1  = "EUR"
+		CCY2  = $CCY
+		Value = $_.$CCY
+	    }
 
-		# Create the structure of the object to be added 
-		$ObjectStructure = @{
-		    Date  = $FxDateasDate
-		    CCY1  = "SGD"
-		    CCY2  = $CCY
-		    Value = $Mult / $_.Value
-		}
+	    # Add the new record to the list - Inspired from method 4
+	    # https://ridicurious.com/2018/10/15/4-ways-to-create-powershell-objects/
+	    $StandardData += New-Object psobject -Property $ObjectStructure
+	}
 
-		# Add the new record to the list - Inspired from method 4
-		# https://ridicurious.com/2018/10/15/4-ways-to-create-powershell-objects/
-		$StandardData += New-Object psobject -Property $ObjectStructure
-		
-	    } # Properties to be processed
-	} # Loop all properties
-    } # End each record 
+    }
 
     # Key to return the data to caller
     $StandardData
     
 }
+
+# # ------------------------------------------------
+# # Standard Output for the data extracted from ECB 
+# # ------------------------------------------------
+# function formatRawData {
+    
+#     param(
+# 	[Parameter(Mandatory=$true)] [string]$request
+#     )
+    
+#     #Extract the data from MAS and process the JSON accordingly 
+#     $data = Invoke-WebRequest $request | Select -ExpandProperty Content | ConvertFrom-Json | Select -ExpandProperty result   
+
+#     # Create Empty array to store the normalized data
+#     $StandardData=@()
+    
+#     # Processing the data in order to get the standard data type
+#     $data.records | ForEach-Object {
+	
+# 	# Read the date for the record to be processed
+# 	$FxDateasDate = [datetime]::ParseExact($_.end_of_day,"yyyy-MM-dd", $null)
+
+# 	# Loop through all the properties of the object
+# 	$_.PSObject.Properties | ForEach-Object {
+# 	    # Eliminate the 3 fields we are not interested in
+# 	    if (($_.Name -ne "timestamp") -and ($_.Name -ne "end_of_day") -and ($_.Name -ne "preliminary")) {
+
+# 		# Extract the key information from Name
+# 		$CCY = $_.Name.substring(0,3).ToUpper()
+# 		if ($_.Name.length -ge 8) { $Mult = $_.Name.substring(8) } else { $Mult = 1 }
+
+# 		# Create the structure of the object to be added 
+# 		$ObjectStructure = @{
+# 		    Date  = $FxDateasDate
+# 		    CCY1  = "SGD"
+# 		    CCY2  = $CCY
+# 		    Value = $Mult / $_.Value
+# 		}
+
+# 		# Add the new record to the list - Inspired from method 4
+# 		# https://ridicurious.com/2018/10/15/4-ways-to-create-powershell-objects/
+# 		$StandardData += New-Object psobject -Property $ObjectStructure
+		
+# 	    } # Properties to be processed
+# 	} # Loop all properties
+#     } # End each record 
+
+#     # Key to return the data to caller
+#     $StandardData
+    
+# }

@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-19 07:03:54 jpdur"
+#                     Time-stamp: "2021-02-20 06:49:07 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -89,8 +89,13 @@ $FormatDef   = &($FormatSetup)
 # Value: 1 CCY1 = Value CCY2
 # Example xxx EUR GBP 0.8 ==> 1 EUR = 0.8 GBP 
 # ------------------------------------------------------------------------- 
+$StartDateasDate
+$EndDateasDate
 $StandardData = $SourceDef.ExtractData($StartDateasDate,$EndDateasDate)
-exit
+
+# Do not Delete !!!! 
+# weird cleanup as in some cases records with empty date appear
+$StandardData = $StandardData | Where-Object {$_.Date -ne $null}
 
 # We need know to filter the data based on the list of dates available
 if ($ListDates -ne $null) {
@@ -106,7 +111,7 @@ if ($ListDates -ne $null) {
 # $OutputCSV  = 'Market entity type,Market entity code,Variant,Date,Value' + "`n"
 $OutputCSV  = $FormatDef.Header($FISType,$CSVSep)
 
-Write-Output "List Curr",$ListCurrencies,"End List"
+# Write-Output "List Curr",$ListCurrencies,"End List"
 
 # -----------------------------------------------------------
 # if BaseCurrency required = SourceDef.BaseCurrency 
@@ -119,7 +124,9 @@ if ($BaseCurrency -ne $SourceDef.BaseCurrency) {
     # Debug
     # "Ad-Hoc $BaseCurrency Exchange Rate"
     # $BaseFXRates
-} 
+}
+
+# $StandardData.length
 
 # -------------------------------------------------------------------
 # Process the data as required - This is common to all sources 

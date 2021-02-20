@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-19 06:53:28 jpdur"
+#                     Time-stamp: "2021-02-20 06:43:26 jpdur"
 # ------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------
@@ -39,11 +39,11 @@ $ExtractDataFct = {
           [Parameter(Mandatory=$false)] [datetime]$EndDateasDate)
 
     # Goes through all historical data and extract only the records between StartDate and EndDate
-    $request = extractDatainInterval -StartDate ($StartDateasDate.ToString("yyyy-MM-dd")) -EndDate ($EndDateasDate.ToString("yyyy-MM-dd"))
+    # and returns the data with standard formatting 
+    $StandardData = extractDatainInterval -StartDate ($StartDateasDate.ToString("yyyy-MM-dd")) -EndDate ($EndDateasDate.ToString("yyyy-MM-dd"))
 
-    # return the formatted result of the request
-    return formatRawData -request $request
-
+    # Key to return the data to caller
+    $StandardData
 }
 
 # Add the method to the object

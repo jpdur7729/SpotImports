@@ -144,7 +144,7 @@ provided is replaced by the USD/SGD
 
 ### Not yet required
 
-BaseCurrency could be extended as a list of BaseCurrency.
+BaseCurrency could be extended and become a list of BaseCurrency.
 
 No extra gain in accuracy but a higher volume of data to be handled. As
 that implies that the number of records generated will be n\*p where:
@@ -193,8 +193,8 @@ csv format Please note that TAB is currently not supported
 
 | Values | Default | Comments   |
 |--------|---------|------------|
-| F2     |         | F2 project |
 | FIS    | D       | Investran  |
+| F2     |         | F2 project |
 
 ## FISType
 
