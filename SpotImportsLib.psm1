@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-17 06:49:36 jpdur"
+#                     Time-stamp: "2021-02-21 18:23:25 jpdur"
 # ------------------------------------------------------------------------------
 
 # Signature function to test if the module is available 
@@ -65,6 +65,24 @@ function SourceDef {
 # 2 methods to be added when instantiating the object 
 # ---------------------------------------------------------
 function FormatDef {
+    param(
+        [Parameter(Mandatory=$true)] [String]$Name
+    )
+
+    # Object Creation
+    $obj = New-Object PSObject -Property @{
+        Name = $Name 
+    }
+
+    # Key to actually return the object 
+    $obj
+}
+
+# ---------------------------------------------------------
+# Create an object to handle the different type of Processings
+# 1 methods to be added when instantiating the object 
+# ---------------------------------------------------------
+function ProcessingDef {
     param(
         [Parameter(Mandatory=$true)] [String]$Name
     )

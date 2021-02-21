@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-20 08:35:03 jpdur"
+#                     Time-stamp: "2021-02-21 18:34:14 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -191,8 +191,24 @@ if ($Output -ne "CsvOnly") {
     cp ./FXrate.xlsx ($Exec_Dir+"/Data/FXrate"+$BatchID+".xlsx")
 }
 
+# Processing if required 
+if ($Processing -ne "NoAction") {
+    # -------------------------------------------------
+    # Based on the Processing -> Setup script to be called
+    # The Ad-hoc Process function is made available
+    # -------------------------------------------------
+    $ProcessingSetup = "./Processing/"+$Processing+"Processing.ps1"
+    $ProcessingDef   = &($ProcessingSetup)
+
+    # Process as expected
+    $ProcessingDef.Process()
+}
+
 # Remove the ad-hoc module which has been created
 Remove-Module ($Source+"Lib")
 
 # That way the module is only used as part of the script and no afterwards
 Remove-Module SpotImportsLib
+
+# Print a white line to improve output
+" "

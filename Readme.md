@@ -41,15 +41,16 @@ installed Reference of how to install Import-Excel can be found at
 Due to the nature of the different sources and how the data is extracte
 different complementary tools are required
 
-| Source | Tool | Comments                                        |
-|--------|------|-------------------------------------------------|
-| ECB    | wget | Different options                               |
-|        |      | Executable assumed to be available - Check Path |
-| MAS    | \-   | Request relying on building an ad-hoc URL       |
-|        |      | No complementary tool is required               |
-| BoE    | \-   | Request relying on building an ad-hoc URL       |
-|        |      | No complementary tool is required               |
-|        |      |                                                 |
+| Source | Tool | Comments                                          |
+|--------|------|---------------------------------------------------|
+| ECB    | wget | Extract the file from the ECB Web site            |
+|        | 7Zip | Assumed to be part of a standard w10 installation |
+|        |      | Executables assumed to be available - Check Path  |
+| MAS    | \-   | Request relying on building an ad-hoc URL         |
+|        |      | No complementary tool is required                 |
+| BoE    | \-   | Request relying on building an ad-hoc URL         |
+|        |      | No complementary tool is required                 |
+|        |      |                                                   |
 
 # Directory structure
 
