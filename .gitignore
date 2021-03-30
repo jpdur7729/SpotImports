@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
-#                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-19 07:26:20 jpdur"
+#                     Author    : FIS - JPD
+#                     Time-stamp: "2021-03-30 11:46:09 jpdur"
 # ------------------------------------------------------------------------------
 
 # Directories not to be included as not ready yet
@@ -14,9 +14,13 @@ makefile
 # All data files generated
 *.csv
 *.xlsx
+*.bat
+*.xml
+*.zip
 
 # All Images
 *.png
 
 # All TestFiles
 Test*.*
+go*.*
