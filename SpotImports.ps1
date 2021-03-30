@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-21 18:34:14 jpdur"
+#                     Time-stamp: "2021-03-30 08:41:05 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -16,7 +16,7 @@ param(
     [Parameter(Mandatory=$false)] [string] $ListDatesStr,
     [Parameter(Mandatory=$false)] [ValidateSet('NoAction','F2')]     [string] $Processing = "NoAction",
     [Parameter(Mandatory=$false)] [ValidateSet('FIS','F2')]          [string] $Format = "FIS",
-    [Parameter(Mandatory=$false)] [ValidateSet('ECB','MAS')]         [string] $Source = "ECB",
+    [Parameter(Mandatory=$false)] [ValidateSet('ECB','MAS','FED')]   [string] $Source = "ECB",
     [Parameter(Mandatory=$false)] [ValidateSet('CsvXlsx','CsvOnly')] [string] $Output = "CsvXlsx",
     [Parameter(Mandatory=$false)] [ValidateSet(",",";","|")]         [string] $CSVSep = ",",
     [Parameter(Mandatory=$false)] [ValidateSet("FXPair","FXRate")]   [string] $FISType = "FXPair",

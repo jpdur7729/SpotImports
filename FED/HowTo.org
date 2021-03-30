@@ -1,0 +1,117 @@
+# -------------------------------------------------------------------------
+#                  Author    : JPD
+#                  Time-stamp: "2021-03-29 15:26:50 jpdur"
+# -------------------------------------------------------------------------
+
+# --------------------------------------------------------
+# US Federal Reserve interface to extract Exchange Rates  
+# --------------------------------------------------------
+
+* Api Description
+
+The URL to be required is built with the parameters of the extract
+The lin below goes to the page in order to extract the data manually
+https://www.federalreserve.gov/datadownload/Download.aspx?rel=H10&series=60f32914ab61dfab590e0e470153e3ae&filetype=spreadsheetml&label=include&layout=seriesrow&from=12/15/2020&to=12/31/2020
+
+- Different possible format csv/xls or xml file
+  CSV will be used as xls seems to be the old format
+- different Layout
+  1) Columns
+  2) Rows
+  3) Lists
+  Columns is to be used as it provides a similar format than ECB history
+  
+** List of currencies provided and format
+Clearly visualised when using the row format as per the spreadsheet
+So =Normalisation= is required in order to have a standard input 
+
+| CCY | Quotation | Comments         | Values |
+|-----+-----------+------------------+--------|
+| AUD | USD       |                  |        |
+| EUR | USD       | 1 EUR = 1.12 USD |   1.12 |
+| NZD | USD       |                  |        |
+| GBP | USD       |                  |        |
+|-----+-----------+------------------+--------|
+| BRL | BRL       |                  |        |
+| CAD | CAD       | 1 USD = 1.27 CAD |   1.27 |
+| CNY | CNY       |                  |        |
+| DKK | DKK       |                  |        |
+| HKD | HKD       |                  |        |
+| INR | INR       |                  |        |
+| JPY | JPY       |                  |        |
+| MYR | MYR       |                  |        |
+| MXN | MXN       |                  |        |
+| NOK | NOK       |                  |        |
+| ZAR | ZAR       |                  |        |
+| SGD | SGD       |                  |        |
+| KRW | KRW       |                  |        |
+| LKR | LKR       |                  |        |
+| SEK | SEK       |                  |        |
+| CHF | CHF       |                  |        |
+| TWD | TWD       |                  |        |
+| THB | THB       |                  |        |
+| VEB | VEB       |                  |        |
+
+** Example files
+CSV:[[file:FRB_H10 Example1.csv][CSV Example]]
+XLS:[[file:FRB_H10_Example2.xml][XLS file with extension XML]] 
+
+** Test via .bat file
+
+The link below automatically generates the csv file which is copied to the current directory
+curl "https://www.federalreserve.gov/datadownload/Output.aspx?rel=H10&series=60f32914ab61dfab590e0e470153e3ae&lastobs=10&from=&to=&filetype=csv&label=include&layout=seriescolumn&type=package" -o result.csv
+
+* FED Reference
+# --------------------------------------------
+# FED interface to extract Exchange Rates  
+# --------------------------------------------
+
+** Api Description 
+No actual description of the API is provided. All has been found as part of reverse engineering
+There is a specific limitation as far as the last date is available. It is always 1 week late
+i.e. on March 20th 2021 the latest information provided is March 19th 2021
+			 
+*** Explanations - details Fields
+
+| to         | from       | lastobs | series                           | Comments                                                         |
+|------------+------------+---------+----------------------------------+------------------------------------------------------------------|
+|            |            |         | 60f32914ab61dfab590e0e470153e3ae | Always default values                                            |
+|            |            |      25 | 60f32914ab61dfab590e0e470153e3ae | 25 FX Rates from the last one available                          |
+| 01/01/2021 | 03/15/2021 |         | 60f32914ab61dfab590e0e470153e3ae | In that period all dates are populated including week-ends       |
+|            |            |         |                                  | For week-end were no quotation happened ND is provided           |
+
+1) /series/
+   Define the list of currencies that are to be extracted
+   Not a user-friendly list or parameters
+   Default value used 60f32914ab61dfab590e0e470153e3ae corresponds to all the currencies in the list above
+2) /lastobs/
+   if from/to is not specified, /lastobs/ provides the FX rates for the last n workingg days (no week-ends to be taken into account)
+3) /to/ and /from/
+   The dates are obviously provided in US format so =03/15/2021= is actually March 15th 2021
+4) /layout/
+   2 possible values
+   * seriescolumn
+   * seriesrow
+   for the presentation of the results
+*** Day Examples 
+**** Day - Example1 Given Date 
+
+
+**** Day - Example2 Between 2 Date 
+
+https://eservices.mas.gov.sg/api/action/datastore/search.json?resource_id=95932927-c8bc-4e7a-b484-68a66a24edfe&limit=10&between%5Bend_of_day%5D=2021-01-12,2021-01-15=end_of_day+asc
+
+Provides Data for all dates i.e. 4 between 12/01/2021 and 15/01/2021 (both limits are included)
+
+{"success":true,"result":{"resource_id":["95932927-c8bc-4e7a-b484-68a66a24edfe"],"limit":10,"total":"4","records":[
+{"end_of_day":"2021-01-12","preliminary":"0","eur_sgd":"1.6169","gbp_sgd":"1.7998","usd_sgd":"1.3311","aud_sgd":"1.0247","cad_sgd":"1.0413","cny_sgd_100":"20.57","hkd_sgd_100":"17.17","inr_sgd_100":"1.8131","idr_sgd_100":"0.009390","jpy_sgd_100":"1.2764","krw_sgd_100":"0.1209","myr_sgd_100":"32.78","twd_sgd_100":"4.7521","nzd_sgd":"0.9541","php_sgd_100":"2.7691","qar_sgd_100":"36.56","sar_sgd_100":"35.49","chf_sgd":"1.4932","thb_sgd_100":"4.4111","aed_sgd_100":"36.24","vnd_sgd_100":"0.005771","timestamp":"1611699944"},
+{"end_of_day":"2021-01-13","preliminary":"0","eur_sgd":"1.6163","gbp_sgd":"1.8112","usd_sgd":"1.3232","aud_sgd":"1.0274","cad_sgd":"1.0411","cny_sgd_100":"20.50","hkd_sgd_100":"17.06","inr_sgd_100":"1.8084","idr_sgd_100":"0.009403","jpy_sgd_100":"1.2774","krw_sgd_100":"0.1209","myr_sgd_100":"32.71","twd_sgd_100":"4.7218","nzd_sgd":"0.9564","php_sgd_100":"2.7537","qar_sgd_100":"36.34","sar_sgd_100":"35.27","chf_sgd":"1.4936","thb_sgd_100":"4.4070","aed_sgd_100":"36.02","vnd_sgd_100":"0.005737","timestamp":"1611699944"},
+{"end_of_day":"2021-01-14","preliminary":"0","eur_sgd":"1.6119","gbp_sgd":"1.8100","usd_sgd":"1.3272","aud_sgd":"1.0273","cad_sgd":"1.0457","cny_sgd_100":"20.51","hkd_sgd_100":"17.12","inr_sgd_100":"1.8138","idr_sgd_100":"0.009416","jpy_sgd_100":"1.2755","krw_sgd_100":"0.1205","myr_sgd_100":"32.83","twd_sgd_100":"4.7359","nzd_sgd":"0.9541","php_sgd_100":"2.7615","qar_sgd_100":"36.45","sar_sgd_100":"35.39","chf_sgd":"1.4940","thb_sgd_100":"4.4188","aed_sgd_100":"36.13","vnd_sgd_100":"0.005754","timestamp":"1611699944"},
+{"end_of_day":"2021-01-15","preliminary":"0","eur_sgd":"1.6104","gbp_sgd":"1.8136","usd_sgd":"1.3257","aud_sgd":"1.0289","cad_sgd":"1.0475","cny_sgd_100":"20.49","hkd_sgd_100":"17.10","inr_sgd_100":"1.8136","idr_sgd_100":"0.009445","jpy_sgd_100":"1.2775","krw_sgd_100":"0.1207","myr_sgd_100":"32.86","twd_sgd_100":"4.7358","nzd_sgd":"0.9543","php_sgd_100":"2.7598","qar_sgd_100":"36.19","sar_sgd_100":"35.34","chf_sgd":"1.4918","thb_sgd_100":"4.4218","aed_sgd_100":"36.09","vnd_sgd_100":"0.005747","timestamp":"1611699944"}
+]}}
+
+
+*** Implementation
+curl + capture into a csv file which can then be read and processed using Powershell
+curl "https://www.federalreserve.gov/datadownload/Output.aspx?rel=H10&series=60f32914ab61dfab590e0e470153e3ae&lastobs=&from=01/01/2021&to=03/15/2021&filetype=csv&label=include&layout=seriesrow" -o result5.csv
+
