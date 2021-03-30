@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
-#                     Author    : F2 - JPD
-#                     Time-stamp: "2021-02-17 07:19:40 jpdur"
+#                     Author    : FIS - JPD
+#                     Time-stamp: "2021-03-30 11:37:41 jpdur"
 # ------------------------------------------------------------------------------
 
 # Inspired from https://mcpmag.com/articles/2018/07/10/check-for-locked-file-using-powershell.aspx?m=1

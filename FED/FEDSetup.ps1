@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
-#                     Author    : F2 - JPD
-#                     Time-stamp: "2021-03-30 08:42:07 jpdur"
+#                     Author    : FIS - JPD
+#                     Time-stamp: "2021-03-30 11:36:49 jpdur"
 # ------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------
@@ -27,10 +27,10 @@
 # we use a local module which is the key main functions
 # it is uploaded as part of the main script
 # -------------------------------------------------------------- 
-# import-module -Force -Name ./ECB/ECBLib
+# import-module -Force -Name ./FED/FEDLib
 
 # Create the object that will be returned afterwards
-$SourceDef = SourceDef -Name "ECB" -BaseCurrency "EUR"
+$SourceDef = SourceDef -Name "FED" -BaseCurrency "USD"
 
 # Create the ExtractData method/function based on the received parameters
 # i.e. StartDateasDate and EndDateasDate 
