@@ -46,6 +46,7 @@ different complementary tools are required
 | ECB    | wget | Extract the file from the ECB Web site            |
 |        | 7Zip | Assumed to be part of a standard w10 installation |
 |        |      | Executables assumed to be available - Check Path  |
+| FED    | curl | Extract csv file from DEF Web site                |
 | MAS    | \-   | Request relying on building an ad-hoc URL         |
 |        |      | No complementary tool is required                 |
 | BoE    | \-   | Request relying on building an ad-hoc URL         |
@@ -59,10 +60,10 @@ different complementary tools are required
 | .          | Where the code, documentation and dashboard is maintained Data  |
 | Data       | Repository of all spreadsheet created                           |
 | Format     | Repository of all the methods associated to the various formats |
-| Action     | Repository of all the methods associated to the various Actions |
 | Processing | Repository of all the methods associated to Processing          |
 | ECB        | Scripts/ Data / ECB specific                                    |
 | MAS        | Scripts/ Data / MAS specific                                    |
+| FED        | Scripts/ Data / FED specific                                    |
 | …          |                                                                 |
 
 # Control Dashboard
@@ -89,6 +90,7 @@ Indicates the source of the FX Rates
 |-----------|-----------|---------|------------------------------|
 | ECB       | ECB       | D       | European Central Bank        |
 | MAS       | MAS       |         | Monetary Authority Singapore |
+| FED       | FED       |         | US Federal Reserve           |
 | BoE       |           | Not Yet | Bank of England              |
 | RijksBank |           | Not Yet | Swedish Central Bank         |
 |           |           |         |                              |
@@ -130,7 +132,7 @@ the Base Currency is the Base Curency of the source.
 |--------|-----------------------|
 | ECB    | EUR                   |
 | MAS    | SGD                   |
-|        |                       |
+| FED    | USD                   |
 
 But in some cases, it might be required to present the Exchange Rates
 against a different Base Currency from the one provided by the Source
