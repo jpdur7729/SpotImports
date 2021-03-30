@@ -1,0 +1,34 @@
+# -------------------------------------------------------------------------
+#                  Author    : JPD
+#                  Time-stamp: "2021-03-30 11:21:02 jpdur"
+# -------------------------------------------------------------------------
+
+# --------------------------------------------
+# ECB interface to extract Exchange Rates  
+# --------------------------------------------
+
+* Api Description 
+How to extract the FX Rates from the ECB Pages
+
+2 methods offered:
+1) Latest FX Rate
+2) Historical FX Rate since 2002-01-01 or equivalent
+   1st day of circulation of EUR
+
+In that process the data extracted is always the historical data i.e. zip file
+Then the required period is extracted from that single file
+
+			 
+* Explanations - details Fields
+    
+* Day Examples 
+** Month End Examples 
+			 
+** Day - Example1 Given Date 
+
+
+** Day - Example2 Between 2 Date 
+
+
+* Implementation
+
