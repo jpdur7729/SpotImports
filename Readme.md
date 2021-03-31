@@ -41,17 +41,16 @@ installed Reference of how to install Import-Excel can be found at
 Due to the nature of the different sources and how the data is extracte
 different complementary tools are required
 
-| Source | Tool | Comments                                          |
-|--------|------|---------------------------------------------------|
-| ECB    | wget | Extract the file from the ECB Web site            |
-|        | 7Zip | Assumed to be part of a standard w10 installation |
-|        |      | Executables assumed to be available - Check Path  |
-| FED    | curl | Extract csv file from DEF Web site                |
-| MAS    | \-   | Request relying on building an ad-hoc URL         |
-|        |      | No complementary tool is required                 |
-| BoE    | \-   | Request relying on building an ad-hoc URL         |
-|        |      | No complementary tool is required                 |
-|        |      |                                                   |
+| Source | Tool | Comments                                             |
+|--------|------|------------------------------------------------------|
+| ECB    | wget | Extract the file from the ECB Web site               |
+|        | 7Zip | Assumed to be part of a standard w10 installation    |
+|        |      | Executables assumed to be available - Check Path     |
+| FED    | curl | Extract csv file from DEF Web site                   |
+| MAS    | \-   | Request relying on building an ad-hoc URL            |
+|        |      | No complementary tool is required                    |
+| BoE    | wget | Request with ad-hoc URL generates tab separated file |
+|        |      |                                                      |
 
 # Directory structure
 
@@ -64,6 +63,7 @@ different complementary tools are required
 | ECB        | Scripts/ Data / ECB specific                                    |
 | MAS        | Scripts/ Data / MAS specific                                    |
 | FED        | Scripts/ Data / FED specific                                    |
+| BoE        | Scripts/ Data / BoE specific                                    |
 | …          |                                                                 |
 
 # Control Dashboard
@@ -91,7 +91,7 @@ Indicates the source of the FX Rates
 | ECB       | ECB       | D       | European Central Bank        |
 | MAS       | MAS       |         | Monetary Authority Singapore |
 | FED       | FED       |         | US Federal Reserve           |
-| BoE       |           | Not Yet | Bank of England              |
+| BoE       | BoE       |         | Bank of England              |
 | RijksBank |           | Not Yet | Swedish Central Bank         |
 |           |           |         |                              |
 
