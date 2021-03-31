@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : FIS - JPD
-#                     Time-stamp: "2021-03-30 11:42:10 jpdur"
+#                     Time-stamp: "2021-03-31 08:01:46 jpdur"
 # ------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------
@@ -42,8 +42,8 @@ $LineFct = {
 
     param([Parameter(Mandatory=$true)] [string]$FISType,
           [Parameter(Mandatory=$true)] [string]$CSVSep,
-          [Parameter(Mandatory=$true)] [string]$CCY,
           [Parameter(Mandatory=$true)] [string]$BaseCurrency,
+          [Parameter(Mandatory=$true)] [string]$CCY,
           [Parameter(Mandatory=$true)] [datetime]$FXDateasDate,
           [Parameter(Mandatory=$true)] [string]$Rate,
           [Parameter(Mandatory=$true)] [string]$FISVariant
@@ -53,7 +53,7 @@ $LineFct = {
     # By using this convention should work too with the US Setup --> Careful
     # return $FISType+$CSVSep+$CCY+"/"+$BaseCurrency+$CSVSep+$FISVariant+$CSVSep+$FXDateasDate.ToString("yyyy-MM-dd")+$CSVSep+$Rate+ "`r`n"
     # return $BaseCurrency+$CSVSep+$CCY+$CSVSep+$Rate+$CSVSep+$FXDateasDate.ToString($DateFormat) + "`r`n"
-    return $CCY+$CSVSep+$BaseCurrency+$CSVSep+$Rate+$CSVSep+$FXDateasDate.ToString("yyyy-MM-dd") + "`r`n"
+    return $BaseCurrency+$CSVSep+$CCY+$CSVSep+$Rate+$CSVSep+$FXDateasDate.ToString("yyyy-MM-dd") + "`r`n"
 
 }
 

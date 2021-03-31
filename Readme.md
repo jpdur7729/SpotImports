@@ -203,14 +203,14 @@ csv format Please note that TAB is currently not supported
 
 Option only is accepted is Format = FIS
 
-| Values | Default | Comments            |
-|--------|---------|---------------------|
-| FXPair | D       |                     |
-| FXRate |         | Not yet Implemented |
+| Values  | Default | Comments        |
+|---------|---------|-----------------|
+| FX Pair | D       |                 |
+| FX Rate |         | To be validated |
 
 ## FISVariant
 
-This is an option used for FIS only if Closing is not used There is no
+This is an option used for FIS only if Closing is not used. There is no
 control about the value. Only a default value **Closing** is provided.
 
 ## Show
@@ -220,7 +220,7 @@ control about the value. Only a default value **Closing** is provided.
 | Show   | D       | Display the contents of the FXRate spreadsheet in Excel |
 | NoShow |         | Does not display anything in Excel.                     |
 
-NoShow option is actually useful if various circumstances such as:
+NoShow option is actually useful in different circumstances such as:
 
 1.  Excel is NOT available
 2.  For testing purposes when many extracts in succession are done
