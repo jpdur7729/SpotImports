@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : FIS - JPD
-#                     Time-stamp: "2021-03-30 11:39:28 jpdur"
+#                     Time-stamp: "2021-03-31 07:51:22 jpdur"
 # ------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------
@@ -27,8 +27,13 @@ $HeaderFct = {
 	 )
     
     # return the result of the request
-    return 'Market entity type'+$CSVSep+'Market entity code'+$CSVSep+'Variant'+$CSVSep+'Date'+$CSVSep+'Value' + "`n"
-
+    if ($FISType -eq "FX Pair") {
+	return 'Market entity type'+$CSVSep+'Market entity code'+$CSVSep+'Variant'+$CSVSep+'Date'+$CSVSep+'Value' + "`n"
+    } else {
+	# for FXRate - header is different
+	return 'FX Rate ISO Code'+$CSVSep+'Date'+$CSVSep+'Variant'+$CSVSep+'Value'+$CSVSep+'Market Entity Type'+$CSVSep+'Market Entity Code' + "`n"
+    }
+    
 }
 
 # Add the method to the object
@@ -42,8 +47,8 @@ $LineFct = {
 
     param([Parameter(Mandatory=$true)] [string]$FISType,
           [Parameter(Mandatory=$true)] [string]$CSVSep,
-          [Parameter(Mandatory=$true)] [string]$CCY,
           [Parameter(Mandatory=$true)] [string]$BaseCurrency,
+          [Parameter(Mandatory=$true)] [string]$CCY,
           [Parameter(Mandatory=$true)] [datetime]$FXDateasDate,
           [Parameter(Mandatory=$true)] [string]$Rate,
           [Parameter(Mandatory=$true)] [string]$FISVariant
@@ -51,7 +56,12 @@ $LineFct = {
 
     # return the line for the Output - Check the hard coded date format
     # By using this convention should work too with the US Setup --> Careful
-    return $FISType+$CSVSep+$CCY+"/"+$BaseCurrency+$CSVSep+$FISVariant+$CSVSep+$FXDateasDate.ToString("yyyy-MM-dd")+$CSVSep+$Rate+ "`r`n"
+    if ($FISType -eq "FX Pair") {
+	return $FISType+$CSVSep+$BaseCurrency+"/"+$CCY+$CSVSep+$FISVariant+$CSVSep+$FXDateasDate.ToString("yyyy-MM-dd")+$CSVSep+$Rate+ "`r`n"
+    } else {
+	# for FXRate - Line structure is different
+	return $CCY+$CSVSep+$FXDateasDate.ToString("yyyy-MM-dd")+$CSVSep+$FISVariant+$CSVSep+$Rate+$CSVSep+$FISType+$CSVSep+$CCY+ "`n"
+    }
 
 }
 

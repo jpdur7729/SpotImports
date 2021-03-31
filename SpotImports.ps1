@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : FIS - JPD
-#                     Time-stamp: "2021-03-30 11:41:29 jpdur"
+#                     Time-stamp: "2021-03-31 07:39:30 jpdur"
 # ------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -19,7 +19,7 @@ param(
     [Parameter(Mandatory=$false)] [ValidateSet('ECB','MAS','FED')]   [string] $Source = "ECB",
     [Parameter(Mandatory=$false)] [ValidateSet('CsvXlsx','CsvOnly')] [string] $Output = "CsvXlsx",
     [Parameter(Mandatory=$false)] [ValidateSet(",",";","|")]         [string] $CSVSep = ",",
-    [Parameter(Mandatory=$false)] [ValidateSet("FXPair","FXRate")]   [string] $FISType = "FXPair",
+    [Parameter(Mandatory=$false)] [ValidateSet("FX Pair","FX Rate")] [string] $FISType = "FX Pair",
     [Parameter(Mandatory=$false)] [ValidateSet("Show","NoShow")]     [string] $Show = "Show",
     [Parameter(Mandatory=$false)] [string] $FISVariant = "Closing",
     [Parameter(Mandatory=$false)] [string] $BaseCurrency,

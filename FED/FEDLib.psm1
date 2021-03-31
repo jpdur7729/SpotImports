@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : FIS - JPD
-#                     Time-stamp: "2021-03-30 11:36:57 jpdur"
+#                     Time-stamp: "2021-03-31 07:59:10 jpdur"
 # ------------------------------------------------------------------------------
 
 function extractDatainInterval {
@@ -20,7 +20,7 @@ function extractDatainInterval {
     # Extract the .zip files with the history of FX Rates from ECB
     # Force the output to be eurofxref-hist.zip thus overwriting any previous extraction
     # $extractcmd = "wget --no-check-certificate https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip -O eurofxref-hist.zip"
-    $extractcmd  = "curl ""https://www.federalreserve.gov/datadownload/Output.aspx?rel=H10&series=60f32914ab61dfab590e0e470153e3ae&lastobs=25&from="+$USFromDate 
+    $extractcmd  = "curl -s ""https://www.federalreserve.gov/datadownload/Output.aspx?rel=H10&series=60f32914ab61dfab590e0e470153e3ae&lastobs=25&from="+$USFromDate 
     $extractcmd += "&to="+$USToDate
     $extractcmd += "&filetype=csv&label=include&layout=seriescolumn"" -o FedRate.csv"
 
@@ -36,7 +36,9 @@ function extractDatainInterval {
     # Read the lines of the csv spreadsheets
     $RawList =  Import-Csv -Path .\FedRate.csv
 
-    $extractcmd  = "curl ""https://www.federalreserve.gov/datadownload/Output.aspx?rel=H10&series=60f32914ab61dfab590e0e470153e3ae&lastobs=25&from="+$USFromDate 
+    # -s does not display the progress info
+    # https://superuser.com/questions/173209/curl-how-to-suppress-strange-output-when-redirecting
+    $extractcmd  = "curl -s ""https://www.federalreserve.gov/datadownload/Output.aspx?rel=H10&series=60f32914ab61dfab590e0e470153e3ae&lastobs=25&from="+$USFromDate 
     $extractcmd += "&to="+$USToDate
     $extractcmd += "&filetype=csv&label=include&layout=seriesrow"" -o FedRateRow.csv"
 
