@@ -1,0 +1,73 @@
+# ----------------------------------------------------------------------
+#                  Author    : FIS - JPD
+#                  Time-stamp: "2021-03-31 15:45:06 jpdur"
+# -------------------------------------------------------------------------
+
+# --------------------------------------------------------
+# Bank of England interface to extract Exchange Rates  
+# --------------------------------------------------------
+
+* Api Description
+
+** High level description
+http://www.bankofengland.co.uk/boeapps/iadb/help.asp?Back=Y&Highlight=XML#XML
+Describes how the URL is to be constructed in order to extract the required data for the required period 
+
+** Test URL 
+http://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp?csv.x=yes&Datefrom=01/Feb/2006&Dateto=01/Oct/2007&SeriesCodes=XUDLERS,XUDLUSS&CSVF=TN&UsingCodes=Y&VPD=Y&VFD=N
+Extract EUR and USD Spots against GBP for the period between 01/Feb/2006 and 01/Oct/2007
+
+** List of currencies provided and associated series
+
+| Currency Name      | ISO | Code Series | Common Daily Prefix | Suffix |
+|--------------------+-----+-------------+---------------------+--------|
+| Australian Dollar  | AUD | XUDLADS     | XUDL                | ADS    |
+| Canadian Dollar    | CAD | XUDLCDS     | XUDL                | CDS    |
+| Chinese Yuan       | CNY | XUDLBK89    | XUDL                | BK89   |
+| Czech Koruna       | CZK | XUDLBK25    | XUDL                | BK25   |
+| Danish Krone       | DKK | XUDLDKS     | XUDL                | DKS    |
+| Euro               | EUR | XUDLERS     | XUDL                | ERS    |
+| Hong Kong Dollar   | HKD | XUDLHDS     | XUDL                | HDS    |
+| Japanese Yen       | JPY | XUDLJYS     | XUDL                | JYS    |
+| Hungarian Forint   | HUF | XUDLBK33    | XUDL                | BK33   |
+| Indian Rupee       | INR | XUDLBK97    | XUDL                | BK97   |
+| Israeli Shekel     | ILS | XUDLBK78    | XUDL                | BK78   |
+| Malaysian Ringgit  | MYR | XUDLBK83    | XUDL                | BK83   |
+| New Zealand Dollar | NZD | XUDLNDS     | XUDL                | NDS    |
+| Norwegian Krone    | NOK | XUDLNKS     | XUDL                | NKS    |
+| Polish Zloty       | PLN | XUDLBK47    | XUDL                | BK47   |
+| Russian Ruble      | RUB | XUDLBK85    | XUDL                | BK85   |
+| Saudi Riyal        | SAR | XUDLSRS     | XUDL                | SRS    |
+| Singapore Dollar   | SGD | XUDLSGS     | XUDL                | SGS    |
+| Swedish Krona      | SEK | XUDLSKS     | XUDL                | SKS    |
+| Swiss Franc        | CHF | XUDLSFS     | XUDL                | SFS    |
+| South African Rand | ZAR | XUDLZRS     | XUDL                | ZRS    |
+| South Korean Won   | KRW | XUDLBK93    | XUDL                | BK93   |
+| Taiwan Dollar      | TWD | XUDLTWS     | XUDL                | TWS    |
+| Thai Baht          | THB | XUDLBK87    | XUDL                | BK87   |
+| Turkish Lira       | TRL | XUDLBK95    | XUDL                | BK95   |
+| US Dollar          | USD | XUDLUSS     | XUDL                | USS    |
+	
+** Suffix per Period
+
+| Period            | Series for AUD | Common Prefix | Period | Currency Code |
+|-------------------+----------------+---------------+--------+---------------|
+| Daily             | XUDLADS        | XU            | DL     | ADS           |
+| Month average     | XUMAADS        | XU            | MA     | ADS           |
+| End month         | XUMLADS        | XU            | ML     | ADS           |
+| Quarterly average | XUQAADS        | XU            | QA     | ADS           |
+| End quarter       | XUQLADS        | XU            | QL     | ADS           |
+| Annual average    | XUAAADS        | XU            | AA     | ADS           |
+| End year          | XUALADS        | XU            | AL     | ADS           |
+
+** Example files
+CSV:[[file:ExampleBoEFX.csv][Example BOE File]]
+
+Example of contents
+| DATE                | XUDLADS | XUDLUSS |
+| 01/02/2006 00:00:00 |  2.3559 |  1.7794 |
+| 02/02/2006 00:00:00 |  2.3593 |  1.7789 |
+| 03/02/2006 00:00:00 |  2.3532 |  1.7602 |
+| 06/02/2006 00:00:00 |  2.3558 |  1.7508 |
+| 07/02/2006 00:00:00 |  2.3486 |   1.741 |
+
