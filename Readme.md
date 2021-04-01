@@ -33,8 +33,11 @@ processed
 
 ## Required Setup
 
-SpotImports relies on the Import-Excel module which needs to be
-installed Reference of how to install Import-Excel can be found at
+SpotImports relies on the Import-Excel powershell module which needs to
+be installed.
+
+Reference of how to install Import-Excel can be found at:
+<https://www.powershellgallery.com/packages/ImportExcel/7.0.1>
 
 ## Source-specific required
 
@@ -54,17 +57,17 @@ different complementary tools are required
 
 # Directory structure
 
-| Directory  | Comments                                                        |
-|------------|-----------------------------------------------------------------|
-| .          | Where the code, documentation and dashboard is maintained Data  |
-| Data       | Repository of all spreadsheet created                           |
-| Format     | Repository of all the methods associated to the various formats |
-| Processing | Repository of all the methods associated to Processing          |
-| ECB        | Scripts/ Data / ECB specific                                    |
-| MAS        | Scripts/ Data / MAS specific                                    |
-| FED        | Scripts/ Data / FED specific                                    |
-| BoE        | Scripts/ Data / BoE specific                                    |
-| …          |                                                                 |
+| Directory  | Comments                                                           |
+|------------|--------------------------------------------------------------------|
+| .          | Where the code, documentation and **dashboard.xlsx** is maintained |
+| Data       | Repository of all spreadsheets created                             |
+| Format     | Repository of all the methods associated to the various formats    |
+| Processing | Repository of all the methods associated to Processing             |
+| ECB        | Scripts/ ECB specific info                                         |
+| MAS        | Scripts/ MAS specific info                                         |
+| FED        | Scripts/ FED specific info                                         |
+| BoE        | Scripts/ BoE specific info                                         |
+| …          |                                                                    |
 
 # Control Dashboard
 
@@ -73,14 +76,13 @@ SpotImports is run. In addition to the various parameters usedfor the
 extract, a unique batch ID is added and a link to the result xlsx file
 created. That way we get:
 
-1.  <u>A unique name for each and every extraction</u> If unicity
-    constraints are required (FIS import) and/or the file is a repeat of
-    a previous extract, in all cases the name being unique makes it easy
-    to manage
-2.  <u>The moment of extract</u> Knowing when the files were created but
-    more importantly the parameters used for the extract is crucial to
+1.  *A unique name for each and every extraction* If unicity constraints
+    are required (FIS import) and/or the file is a repeat of a previous
+    extract, in all cases the name being unique makes it easy to manage
+2.  *The moment of extract* Knowing when the files were created but more
+    importantly the parameters used for the extract is crucial to
     determine the expected contents of the generated spreadsheet
-3.  <u>Easy access to the created spreadsheet</u> The generated excel
+3.  *Easy access to the created spreadsheet* The generated excel
     spreadsheet - via the link - can be checked easily in order to
     verify the data
 
