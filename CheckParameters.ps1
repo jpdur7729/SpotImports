@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------
 #                     Author    : FIS - JPD
-#                     Time-stamp: "2021-03-30 11:37:34 jpdur"
+#                     Time-stamp: "2021-04-01 07:20:58 jpdur"
 # ------------------------------------------------------------------------------
 
 # Convert String Date to Date
@@ -102,7 +102,7 @@ $ShowOption = ($Show -eq "Show")
 # Package all the parameters in order to add them to the dashboard
 $ParametersList = [pscustomobject]@{
     BatchID = $BatchID
-    Link = ""
+    Link = "=HYPERLINK(""Data\FXRate"+$BatchID+".xlsx"")"
 # All repackaged parameters in the order of the displayed fields    
     StartDate = $StartDate
     EndDate = $EndDate
@@ -134,6 +134,12 @@ if ((Test-Path -Path ($Exec_Dir+"\Dashboard.xlsx") ) -eq $true) {
 
     # Have we read something 
     if ($data.length -ne 0) { $ParametersArray += $data }
+}
+
+# Reset the link for all lines - as it is a formula lost when read
+# so we need to recreate it every time 
+ForEach ($ParamsLine in $ParametersArray) {
+    $ParamsLine.Link = "=HYPERLINK(""Data\FXRate"+$ParamsLine.BatchID+".xlsx"")"
 }
 
 # Push all runs to the list
