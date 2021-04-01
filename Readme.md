@@ -43,7 +43,7 @@ different complementary tools are required
 
 | Source | Tool | Comments                                             |
 |--------|------|------------------------------------------------------|
-| ECB    | wget | Extract the file from the ECB Web site               |
+| ECB    | wget | Extract a file from the ECB Web site                 |
 |        | 7Zip | Assumed to be part of a standard w10 installation    |
 |        |      | Executables assumed to be available - Check Path     |
 | FED    | curl | Extract csv file from DEF Web site                   |
@@ -68,17 +68,21 @@ different complementary tools are required
 
 # Control Dashboard
 
-An Excel spreadsheet is updated with each and everyone of the call to
-the extract It stores the batch ID, the various parameters used and a
-link to the result file That way it is easy to have:
+An Excel spreadsheet **Dashboard.xlsx** is updated with each everyone
+SpotImports is run. In addition to the various parameters usedfor the
+extract, a unique batch ID is added and a link to the result xlsx file
+created. That way we get:
 
-1.  A unique name for each and every file created No name ambiguity so
-    easy to manage and upload even if unicity constraints are required
-    and/or the file is a repeat of a previous extract
-2.  Now when the files were created and what is the expected contents of
-    the file
-3.  The excel spreadsheet can then be used to check that the expected
-    batches have run.
+1.  <u>A unique name for each and every extraction</u> If unicity
+    constraints are required (FIS import) and/or the file is a repeat of
+    a previous extract, in all cases the name being unique makes it easy
+    to manage
+2.  <u>The moment of extract</u> Knowing when the files were created but
+    more importantly the parameters used for the extract is crucial to
+    determine the expected contents of the generated spreadsheet
+3.  <u>Easy access to the created spreadsheet</u> The generated excel
+    spreadsheet - via the link - can be checked easily in order to
+    verify the data
 
 # Parameters
 
@@ -223,7 +227,9 @@ control about the value. Only a default value **Closing** is provided.
 NoShow option is actually useful in different circumstances such as:
 
 1.  Excel is NOT available
-2.  For testing purposes when many extracts in succession are done
+2.  For testing purposes when many extracts in succession are done In
+    that last case, leveraging the Dahsboard.xlsx spreadsheet it is easy
+    to examine the created spreadsheets
 
 # Date Format
 
